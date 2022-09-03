@@ -1,4 +1,4 @@
 #!/bin/bash
 python3 GenerateMultipleBTSTests.py
 
-sh Run_all.sh
+sh case_run.sh
