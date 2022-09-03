@@ -45,8 +45,8 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
                 else:
                     shutil.copyfile(seed_file_path_and_name, aim_file_path_and_name) 
 
-        # write the cases_run.sh
-        f_w_cases_run.write('cd '+ aim_path + '\n')
-        f_w_cases_run.write('sh run_omp.sh' + '\n')
+            # write the cases_run.sh
+            f_w_cases_run.write('cd '+ aim_path + '\n')
+            f_w_cases_run.write('sh run_omp.sh' + '\n')
 
 
