@@ -22,7 +22,7 @@ class BrazilianSplitTest(DEMAnalysisStage):
         self._GetSolver().cplusplus_strategy.HealAllBonds()
         ParallelBondUtilities().SetCurrentIndentationAsAReferenceInParallelBondsForPBM(self.spheres_model_part)
         self.spheres_model_part.ProcessInfo[DELTA_TIME] = self.parameters["MaxTimeStep"].GetDouble()
-        self.dt = self.spheres_model_part.ProcessInfo[DELTA_TIME]1
+        self.dt = self.spheres_model_part.ProcessInfo[DELTA_TIME]
         self.end_sim = 0
              
     def RunSolutionLoop(self):
