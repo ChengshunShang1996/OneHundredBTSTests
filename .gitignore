@@ -56,6 +56,7 @@ __pycache__
 # build 
 build/*
 Generated_BTS_cases/*
+cases_run.sh
 
 # Most used editor files
 *.vscode
