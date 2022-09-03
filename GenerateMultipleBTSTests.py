@@ -16,7 +16,8 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
             #creat new folder
             new_folder_name = 'BTS_Sigma' + str(sigma_limit) + '_Tension' + str(tension_limit)
             aim_path = os.path.join(os.getcwd(),'Generated_BTS_cases', new_folder_name)
-            shutil.rmtree(aim_path)
+            if os.path.exists():
+                shutil.rmtree(aim_path)
             os.mkdir(aim_path)
 
             #copy source file
