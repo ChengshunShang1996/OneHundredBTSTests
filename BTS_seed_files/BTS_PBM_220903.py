@@ -22,7 +22,8 @@ class BrazilianSplitTest(DEMAnalysisStage):
         self._GetSolver().cplusplus_strategy.HealAllBonds()
         ParallelBondUtilities().SetCurrentIndentationAsAReferenceInParallelBondsForPBM(self.spheres_model_part)
         self.spheres_model_part.ProcessInfo[DELTA_TIME] = self.parameters["MaxTimeStep"].GetDouble()
-        self.dt = self.spheres_model_part.ProcessInfo[DELTA_TIME]
+        self.dt = self.spheres_model_part.ProcessInfo[DELTA_TIME]1
+        self.end_sim = 0
              
     def RunSolutionLoop(self):
 
@@ -37,6 +38,7 @@ class BrazilianSplitTest(DEMAnalysisStage):
     def OutputSolutionStep(self):
         super().OutputSolutionStep()
         self.PrintGraph(self.time)
+        self.CheckSimulationEnd()
     
     def FinalizeSolutionStep(self):
         super().FinalizeSolutionStep()
@@ -46,6 +48,10 @@ class BrazilianSplitTest(DEMAnalysisStage):
         super().Finalize()
         # TODO: After self.CleanUpOperations() in base class!!
         self.FinalizeGraphs()
+
+    def KeepAdvancingSolutionLoop(self):
+        
+        return (self.time < self.end_time and self.end_sim < 1)
 
     def InitializeMaterialTest(self):
 
@@ -62,6 +68,9 @@ class BrazilianSplitTest(DEMAnalysisStage):
         self.total_tensile_stress = 0.0
         self.LoadingVelocity = 0.0
         self.MeasuringSurface = 0.0
+        self.total_tensile_stress_list = []
+        self.total_tensile_stress_max = 0.0
+        self.total_tensile_stress_max_time = 0.0
 
         if "material_test_settings" in self.parameters.keys():
             self.thickness = self.parameters["material_test_settings"]["SpecimenThickness"].GetDouble()
@@ -117,6 +126,17 @@ class BrazilianSplitTest(DEMAnalysisStage):
         self.total_stress_mean = 0.5 * (self.total_stress_bot + self.total_stress_top)
 
         self.total_tensile_stress = 2.0 * 0.5 * (total_force_top + total_force_bot) / (math.pi * self.diameter * self.thickness)
+
+        self.total_tensile_stress_list.append(self.total_tensile_stress)
+
+        if self.total_tensile_stress_max < self.total_tensile_stress:
+            self.total_tensile_stress_max = self.total_tensile_stress
+            self.total_tensile_stress_max_time = self.time
+
+    def CheckSimulationEnd(self):
+
+        if self.total_tensile_stress_max_time < 0.5 * self.time:
+            self.end_sim = 2   # means end the simulation
 
     def ComputeMeasuringSurface(self):
         self.MeasuringSurface = self.width * self.length

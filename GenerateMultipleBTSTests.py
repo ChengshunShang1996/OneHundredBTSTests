@@ -1,8 +1,11 @@
 import os
 import shutil
+import numpy as np
 
-sigma_limit_list = [1,2]
-tension_limit_list = [3,5]
+#sigma_limit_list = np.arange(100, 100000, 0.5).tolist()
+#tension_limit_list = np.arange(100, 100000, 0.5).tolist()
+sigma_limit_list = [10, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000]
+tension_limit_list = [10, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000]
 
 # creat the cases_run.sh
 cases_run_path_and_name = os.path.join(os.getcwd(),'cases_run.sh')
