@@ -24,7 +24,7 @@ with open(cases_run_path_and_name, "w") as f_w_cases_run:
             os.mkdir(aim_path)
 
             #copy source file
-            seed_file_name_list = ['BTS_PBM_220826.py', 'BTStestDEM_FEM_boundary.mdpa', 'BTStestDEM.mdpa', 'ProjectParametersDEM.json', 'MaterialsDEM.json', 'run_omp.sh']
+            seed_file_name_list = ['BTS_PBM_220903.py', 'BTStestDEM_FEM_boundary.mdpa', 'BTStestDEM.mdpa', 'ProjectParametersDEM.json', 'MaterialsDEM.json', 'run_omp.sh']
             for seed_file_name in seed_file_name_list:
                 seed_file_path_and_name = os.path.join(os.getcwd(),'BTS_seed_files',seed_file_name)
                 aim_file_path_and_name = os.path.join(aim_path, seed_file_name)
