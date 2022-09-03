@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=BTS-Q-Ep6.2e10-T1e3-f0.1
-#SBATCH --output=BTS-Q-Ep6.2e10-T4.6e4%j.out
-#SBATCH --error=BTS-Q-Ep6.2e10-T4.6e4%j.err
+#SBATCH --output=BTS-Q-Ep6.2e10-T1e3-f0.1%j.out
+#SBATCH --error=BTS-Q-Ep6.2e10-T1e3-f0.1%j.err
 #SBATCH --partition=B510
 #SBATCH --ntasks-per-node=10
 

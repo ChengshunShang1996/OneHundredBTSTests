@@ -1,12 +1,51 @@
 import os
+import shutil
 
 sigma_limit_list = [1,2]
 tension_limit_list = [3,5]
 
-for sigma in sigma_limit_list:
-    for tension in tension_limit_list:
-        new_folder_name = 'BTS_Sigma' + str(sigma) + '_Tension' + str(tension)
-        #aim_folder_path = os.path.join(os.getcwd(),Generated_BTS_cases,new_folder_name)
-        aim_path = os.path.join(os.getcwd(),'Generated_BTS_cases', new_folder_name)
-        os.mkdir(aim_path)
-        
+# creat the cases_run.sh
+cases_run_path_and_name = os.path.join(os.getcwd(),'cases_run.sh')
+with open(cases_run_path_and_name, "w") as f_w_cases_run:
+    f_w_cases_run.write('#!/bin/bash'+'\n')
+
+    for sigma_limit in sigma_limit_list:
+
+        for tension_limit in tension_limit_list:
+
+            #creat new folder
+            new_folder_name = 'BTS_Sigma' + str(sigma_limit) + '_Tension' + str(tension_limit)
+            aim_path = os.path.join(os.getcwd(),'Generated_BTS_cases', new_folder_name)
+            shutil.rmtree(aim_path)
+            os.mkdir(aim_path)
+
+            #copy source file
+            seed_file_name_list = ['BTS_PBM_220826.py', 'BTStestDEM_FEM_boundary.mdpa', 'BTStestDEM.mdpa', 'ProjectParametersDEM.json', 'MaterialsDEM.json', 'run_omp.sh']
+            for seed_file_name in seed_file_name_list:
+                seed_file_path_and_name = os.path.join(os.getcwd(),'BTS_seed_files',seed_file_name)
+                aim_file_path_and_name = os.path.join(aim_path, seed_file_name)
+
+                if seed_file_name == 'MaterialsDEM.json':
+                    with open(seed_file_path_and_name, "r") as f_material:
+                        with open(aim_file_path_and_name, "w") as f_material_w:
+                            for line in f_material.readlines():
+                                if "BOND_SIGMA_MAX" in line:
+                                    line = line.replace("1e3", str(sigma_limit))
+                                if "BOND_TAU_ZERO" in line:
+                                    line = line.replace("2.6e6", str(tension_limit))
+                                f_material_w.write(line)
+                elif seed_file_name == 'run_omp.sh':
+                    with open(seed_file_path_and_name, "r") as f_run_omp:
+                        with open(aim_file_path_and_name, "w") as f_run_omp_w:
+                            for line in f_run_omp.readlines():
+                                if "BTS-Q-Ep6.2e10-T1e3-f0.1" in line:
+                                    line = line.replace("BTS-Q-Ep6.2e10-T1e3-f0.1", new_folder_name)
+                                f_run_omp_w.write(line)
+                else:
+                    shutil.copyfile(seed_file_path_and_name, aim_file_path_and_name) 
+
+        # write the cases_run.sh
+        f_w_cases_run.write('cd '+ aim_path + '\n')
+        f_w_cases_run.write('sh run_omp.sh' + '\n')
+
+
