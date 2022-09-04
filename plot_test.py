@@ -1,49 +1,35 @@
+import os
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy.interpolate as interp
 
-origin = 'lower'
+x,y,z = [],[],[]
+BTS_peak_points_path_and_name = os.path.join(os.getcwd(),'BTS_peak_points.dat')
+with open(BTS_peak_points_path_and_name, "r") as f_w_peak_points:
+    for line in f_w_peak_points:
+        values = [float(s) for s in line.split()]
+        x.append(values[0])
+        y.append(values[1])
+        z.append(values[2])
 
-delta = 0.025
+#levels = np.linspace(43000,45000,10)
+levels = 50
 
-x = y = np.arange(-3.0, 3.01, delta)
-X, Y = np.meshgrid(x, y)
-Z1 = np.exp(-X**2 - Y**2)
-Z2 = np.exp(-(X - 1)**2 - (Y - 1)**2)
-Z = (Z1 - Z2) * 2
+#plt.contourf(X, Y, Z, 20, cmap=plt.get_cmap('YlGn'))
+#cs = plt.tricontour(x, y, z, levels=levels, colors = 'white', linewidths = 0.1)
+#plt.tricontour(x, y, z, levels=[43999, 44001], colors = 'white', linewidths = 0.5)
+#plt.tricontourf(x, y, z, levels=levels, cmap='coolwarm')
+plotx,ploty, = np.meshgrid(np.linspace(np.min(x),np.max(x),10),\
+                           np.linspace(np.min(y),np.max(y),10))
+plotz = interp.griddata((x,y),z,(plotx,ploty),method='linear')
 
-nr, nc = Z.shape
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(plotx,ploty,plotz,cstride=1,rstride=1,cmap='coolwarm')
 
-# put NaNs in one corner:
-Z[-nr // 6:, -nc // 6:] = np.nan
-# contourf will convert these to masked
+plt.xlabel('sigma_limit')
+plt.ylabel('tension_limit')
+plt.title('BTS strength')
 
-
-Z = np.ma.array(Z)
-# mask another corner:
-Z[:nr // 6, :nc // 6] = np.ma.masked
-
-# mask a circle in the middle:
-interior = np.sqrt(X**2 + Y**2) < 0.5
-Z[interior] = np.ma.masked
-
-fig1, ax2 = plt.subplots(constrained_layout=True)
-CS = ax2.contourf(X, Y, Z, 10, cmap=plt.cm.bone, origin=origin)
-
-# Note that in the following, we explicitly pass in a subset of the contour
-# levels used for the filled contours.  Alternatively, we could pass in
-# additional levels to provide extra resolution, or leave out the *levels*
-# keyword argument to use all of the original levels.
-
-#CS2 = ax2.contour(CS, levels=CS.levels[::2], colors='r', origin=origin)
-
-ax2.set_title('Nonsense (3 masked regions)')
-ax2.set_xlabel('word length anomaly')
-ax2.set_ylabel('sentence length anomaly')
-
-# Make a colorbar for the ContourSet returned by the contourf call.
-cbar = fig1.colorbar(CS)
-cbar.ax.set_ylabel('verbosity coefficient')
-# Add the contour line levels to the colorbar
-#cbar.add_lines(CS2)
-
+#plt.colorbar()
 plt.show()
