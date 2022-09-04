@@ -21,4 +21,4 @@ with open(BTS_peak_points_path_and_name, "w") as f_w_peak_points:
                     tensile_data_list.append(values[1]) 
 
             # write BTS_peak_points.dat
-            f_w_peak_points.write(str(sigma_limit) + ' ' + str(tension_limit) + ' ' + max(tensile_data_list) + '\n')
+            f_w_peak_points.write(str(sigma_limit) + ' ' + str(tension_limit) + ' ' + str(max(tensile_data_list)) + '\n')
