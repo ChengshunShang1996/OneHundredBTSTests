@@ -11,11 +11,18 @@ with open(BTS_peak_points_path_and_name, "r") as f_w_peak_points:
         y.append(values[1])
         z.append(values[2])
 
-X, Y = np.meshgrid(x, y)
-#Z = z.reshape(21, 21)
-Z = z
+#levels = np.linspace(43000,45000,10)
+levels = 50
 
-plt.contourf(X, Y, Z, 20, cmap=plt.get_cmap('YlGn'))
-#plt.contourf(X, Y, Z, 20)
-#plt.pcolor(xi, yi, zi, cmap=plt.get_cmap('hot'))
+#plt.contourf(X, Y, Z, 20, cmap=plt.get_cmap('YlGn'))
+#cs = plt.tricontour(x, y, z, levels=levels, colors = 'white', linewidths = 0.1)
+plt.tricontour(x, y, z, levels=[43999, 44001], colors = 'white', linewidths = 0.5)
+plt.tricontourf(x, y, z, levels=levels, cmap='coolwarm')
+#cs.clabel(inline=True, fmt='%d', fontsize = 'smaller', manual=true)
+
+plt.xlabel('sigma_limit')
+plt.ylabel('tension_limit')
+plt.title('BTS strength')
+
+plt.colorbar()
 plt.show()
