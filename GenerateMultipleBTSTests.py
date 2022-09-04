@@ -1,6 +1,6 @@
 import os
 import shutil
-import numpy as np
+#import numpy as np
 
 #sigma_limit_list = np.arange(100, 100000, 0.5).tolist()
 #tension_limit_list = np.arange(100, 100000, 0.5).tolist()
