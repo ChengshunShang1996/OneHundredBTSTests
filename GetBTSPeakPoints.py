@@ -1,7 +1,9 @@
 import os
 
-sigma_limit_list = [10, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000]
-shear_limit_list = [10, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000]
+#sigma_limit_list = [10, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000]
+#tension_limit_list = [10, 100, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000]
+sigma_limit_list = [100, 500, 1000, 5000, 10000, 50000, 100000, 500000]
+shear_limit_list = [10000, 50000, 100000, 200000, 300000, 400000, 500000, 600000]
 
 # creat the BTS_peak_points.dat
 BTS_peak_points_path_and_name = os.path.join(os.getcwd(),'BTS_peak_points.dat')

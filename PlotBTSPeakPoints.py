@@ -20,8 +20,8 @@ plt.tricontour(x, y, z, levels=[43999, 44001], colors = 'white', linewidths = 0.
 plt.tricontourf(x, y, z, levels=levels, cmap='coolwarm')
 #cs.clabel(inline=True, fmt='%d', fontsize = 'smaller', manual=true)
 
-plt.xlabel('sigma_limit')
-plt.ylabel('tension_limit')
+plt.xlabel('Tension_limit')
+plt.ylabel('Shear_limit')
 plt.title('BTS strength')
 
 plt.colorbar()
