@@ -9,7 +9,7 @@ import shutil
 #sigma_limit_list = [100, 500, 1000, 5000, 10000, 50000, 100000, 500000]
 #shear_limit_list = [10000, 50000, 100000, 200000, 300000, 400000, 500000, 600000]
 sigma_limit_list = [10, 100, 200, 300, 400, 500, 600, 700, 800, 900]
-shear_limit_list = [51200, 51400, 51600, 51800, 52000, 52200, 52400, 52600, 52800, 53000]
+shear_limit_list = [512000, 514000, 516000, 518000, 520000, 522000, 524000, 526000, 528000, 530000]
 
 # creat the cases_run.sh
 cases_run_path_and_name = os.path.join(os.getcwd(),'cases_run.sh')
