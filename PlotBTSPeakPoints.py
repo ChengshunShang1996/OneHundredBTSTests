@@ -7,7 +7,7 @@ levels = 50
 
 x,y,z = [],[],[]
 #BTS_peak_points_path_and_name = os.path.join(os.getcwd(),'BTS_peak_points_03_025_001.dat')
-BTS_peak_points_path_and_name = os.path.join(os.getcwd(),'BTS_peak_points_02.dat')
+BTS_peak_points_path_and_name = os.path.join(os.getcwd(),'BTS_peak_points.dat')
 with open(BTS_peak_points_path_and_name, "r") as f_w_peak_points:
     for line in f_w_peak_points:
         values = [float(s) for s in line.split()]
@@ -29,7 +29,7 @@ with open(BTS_peak_points_path_and_name, "r") as f_w_peak_points:
 '''
 #plt.contourf(X, Y, Z, 20, cmap=plt.get_cmap('YlGn'))
 #cs = plt.tricontour(x, y, z, levels=levels, colors = 'white', linewidths = 0.1)
-plt.tricontour(x, y, z, levels=[46193, 46195], colors = 'white', linewidths = 0.5)
+plt.tricontour(x, y, z, levels=[46193, 46195], colors = 'blue', linewidths = 0.5)
 plt.tricontourf(x, y, z, levels=levels, cmap='coolwarm')
 #cs.clabel(inline=True, fmt='%d', fontsize = 'smaller', manual=true)
 
